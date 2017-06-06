@@ -1,0 +1,17 @@
+We are using the GORM {gormVersion}.
+
+[source, groovy]
+.gradle.properties
+----
+include::{sourceDir}/gradle.properties[indent=0]
+----
+
+
+[source, groovy]
+.build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0]
+----
+
+<1> For this guide we are using GORM Hibernate implementation
+<2> Include the `grails-datastore-gorm-test` dependency to test GORM
