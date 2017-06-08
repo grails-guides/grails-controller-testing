@@ -15,10 +15,7 @@ class BootStrap {
         List<Map<String, Object>> students = [
                 [name: 'Nirav', grade: 100],
                 [name: 'Jeff', grade: 95],
-                [name: 'Sergio', grade: 90],
-                [name: 'Ivan', grade: 99],
-                [name: 'Zak', grade: 98],
-                [name: 'Ryan', grade: 55]
+                [name: 'Sergio', grade: 90]
         ]
 
         for ( Map<String, Object> s : students ) {

@@ -28,7 +28,7 @@ class StudentControllerSpec extends Specification {
 
         then:"The model is correct"
             model.studentList
-            model.studentCount == 6
+            model.studentCount == 3
     }
 
     void "Test the create action returns the correct model"() {
