@@ -5,7 +5,7 @@ gettingStarted:
 writingTheApp:
   title: Writing the Application
   domainClassAndScaffold: Domain Class and Scaffold
-  dynamicFinderService: DynamicFinder Service
+  unitTestModelView: Unit Test Model and View
   dynamicFinderServiceTests: HibernateSpec
   gormService: Projection Query
   integrationTests: Service Integration tests

@@ -1,3 +1,4 @@
+// tag::specBeginning[]
 package grails.controller.testing
 
 import grails.test.mixin.*
@@ -7,10 +8,13 @@ import spock.lang.*
 @Mock(Student)
 class StudentControllerSpec extends Specification {
 
+// end::specBeginning[]
+
     def setup() {
         controller.studentService = Mock(StudentService)
     }
 
+    // tag::populateParams[]
     def populateValidParams(params) {
         assert params != null
 
@@ -18,18 +22,22 @@ class StudentControllerSpec extends Specification {
         params["grade"] = 100
     }
 
-    void "Test the index action returns the correct model"() {
+    // end::populateParams[]
 
+    // tag::testIndex[]
+    void "Test the index action returns the correct model"() {
         given:
-            BootStrap.initStudents()
+            BootStrap.initStudents() // <1>
 
         when:"The index action is executed"
             controller.index()
 
         then:"The model is correct"
-            model.studentList
+            model.studentList  // <2>
             model.studentCount == 3
     }
+
+    // end::testIndex[]
 
     void "Test the create action returns the correct model"() {
         when:"The create action is executed"
@@ -39,11 +47,12 @@ class StudentControllerSpec extends Specification {
             model.student!= null
     }
 
+    // tag::testSave[]
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
-            request.method = 'POST'
+            request.method = 'POST' // <3>
             def student = new Student()
             student.validate()
             controller.save(student)
@@ -64,6 +73,8 @@ class StudentControllerSpec extends Specification {
             controller.flash.message != null
             Student.count() == 1
     }
+
+    // end::testSave[]
 
     void "Test that the show action returns the correct model"() {
         when:"The show action is executed with a null domain"
@@ -199,4 +210,6 @@ class StudentControllerSpec extends Specification {
         then:
             Student.count() == 1
     }
+// tag::specEnding[]
 }
+// end::specEnding[]

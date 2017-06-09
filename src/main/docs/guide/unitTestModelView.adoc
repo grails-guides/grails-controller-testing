@@ -1,0 +1,70 @@
+The `StudentControllerSpec` is generated with template code to test the standard CRUD functions of the
+`StudentController` class. Let's use this as a starting point to test the `StudentController`.
+
+[big]*Validate the Model Returned*
+
+The `index()` action method returns a `studentList` and `count` as a model back to the view.
+
+[source, groovy]
+.grails-app/controllers/grails/controller/testing/StudentController.groovy
+----
+include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=indexMethod]
+----
+
+When unit testing controllers, we are able to use the `@TestFor` mixin to provide accessible properties to validate the controller. The `controller`,
+`model`, `request`, `response`, and `view` are all available in the Spec class. Add a `given:` clause with data setup to the
+`Test the index action returns the correct model` spock test to validate the correct model and count are returned.
+
+[source, groovy]
+.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+----
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specBeginning]
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=testIndex]
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specEnding]
+----
+
+<1> Creates data in the mock GORM API
+<2> Access the returned model to validate
+
+Execute the test. The test we augmented should pass while the others will still fail.
+
+[source, bash]
+----
+> grails test-app -unit
+----
+
+[big]*Validate View and Response Redirect on Save*
+
+The `save()` action method checks for `null` or errors, saves a student, then proceeds to return a student back to the model.
+It also redirects the student to the `show.gsp` page.
+
+[source, groovy]
+.grails-app/controllers/grails/controller/testing/StudentController.groovy
+----
+include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=saveMethod]
+----
+
+In the spec, we must provide params to the domain object `Student` to allow it to save. Add to the `populateValidParams`
+method appropriately. Also notice in the Spec how we can manipulate the `contentType`, the `request` method with POST, and access the
+`redirectedUrl` property in the `response`:
+
+[source, groovy]
+----
+request.contentType = FORM_CONTENT_TYPE
+request.method = 'POST'
+response.redirectedUrl == '/student/show/1'
+----
+
+Your resulting code should resemble below:
+
+[source, groovy]
+.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+----
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specBeginning]
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=populateParams]
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=testIndex]
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=testSave]
+include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specEnding]
+----
+
+<3> Since the save method is restricted to POST, we must specify the request.method is a POST call

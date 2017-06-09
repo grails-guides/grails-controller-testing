@@ -10,10 +10,12 @@ class StudentController {
 
     StudentService studentService
 
+    // tag::indexMethod[]
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Student.list(params), model:[studentCount: Student.count()]
     }
+    // end::indexMethod[]
 
     def show(Student student) {
         respond student
@@ -23,6 +25,7 @@ class StudentController {
         respond new Student(params)
     }
 
+    // tag::saveMethod[]
     @Transactional
     def save(Student student) {
         if (student == null) {
@@ -47,6 +50,7 @@ class StudentController {
             '*' { respond student, [status: CREATED] }
         }
     }
+    // end::saveMethod[]
 
     def edit(Student student) {
         respond student
