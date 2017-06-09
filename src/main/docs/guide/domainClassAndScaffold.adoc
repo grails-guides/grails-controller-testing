@@ -1,0 +1,52 @@
+We will create a Domain classe `Student`, with basic attributes `name` and `grade`.
+
+[source, bash]
+----
+> grails create-domain-class Student
+----
+
+Add domain properties to the created class file.
+
+[source, groovy]
+.grails-app/domain/grails/controller/testing/Student.groovy
+----
+include::{sourceDir}/grails-app/domain/grails/controller/testing/Student.groovy[indent=0]
+----
+
+Next we can quickly create a CRUD application by using the Grails command line. This will
+generate the Controller and view `.gsp` classes with all the code included. It will also generate
+a Controller Spock Spec class, where we can manipulate the code.
+
+[source, bash]
+----
+> grails generate-all grails.controller.testing.Student
+----
+
+You should have the following files generated:
+
+[source, groovy]
+----
+.grails-app/controllers/grails/controller/testing/StudentController.groovy
+.grails-app/views/student/create.gsp
+.grails-app/views/student/edit.gsp
+.grails-app/views/student/create.gsp
+.grails-app/views/student/create.gsp
+.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+----
+
+In the `BootStrap.groovy`, lets create some seed data to make sure our application is operating correctly.
+We will create sample students in development mode.
+
+[source, groovy]
+.grails-app/init/grails/controller/testing/BootStrap.groovy
+----
+include::{sourceDir}/grails-app/init/grails/controller/testing/BootStrap.groovy[indent=0]
+----
+
+Let's do a dry run of the app and see if it comes up correctly. We should be able to click on `StudentController`
+and see the list of students in the scaffolding page.
+
+[source, bash]
+----
+> grails run-app
+----

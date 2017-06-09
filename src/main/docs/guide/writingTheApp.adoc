@@ -1,3 +1,4 @@
-We are going to write a simple application involving a `Classroom` and a `Student` domain class.
+We are going to write a very simple CRUD application involving one domain class `Student`.
 
-Several services will interact with those domain classes. We will use those services to discuss several testing topics. 
+We will have one service class that simply calculates the students grade average. We will be able to explore
+Controller testing approaches within this context.

@@ -165,7 +165,7 @@ class StudentControllerSpec extends Specification {
             1 * controller.studentService.calculateAvgGrade() >> 100
     }
 
-    void "test update with param inputs" () {
+    void "test update with param inputs to a command object" () {
         when: "student is saved initially"
             request.method = 'PUT'
             def student = new Student(name: "Niraaav_misspelled", grade: 100)

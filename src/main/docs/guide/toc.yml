@@ -4,8 +4,7 @@ gettingStarted:
   howto: How to complete the guide
 writingTheApp:
   title: Writing the Application
-  domainClasses: Domain Classes
-  gormHibernate: Gorm Hibernate
+  domainClassAndScaffold: Domain Class and Scaffold
   dynamicFinderService: DynamicFinder Service
   dynamicFinderServiceTests: HibernateSpec
   gormService: Projection Query

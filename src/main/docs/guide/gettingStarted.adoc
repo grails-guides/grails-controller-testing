@@ -1,6 +1,7 @@
-In this guide you are going explore Service Testing in Grails. You are going to learn
-about:
+In this guide you are going explore Controller Testing in Grails. We are going to focus on some of the most common use cases:
 
-- Grails Services Unit tests - Mocking Collaborators
-- Grails Services Unit tests - GORM code
-- Grails Services Integration tests
+- Grails Controller Unit Test - validate model, views, status and redirect
+- Grails Controller Unit Test - validate a controller calls the correct delegated service methods
+- Grails Controller Unit Test - validate HTTP parameters bind to a command object
+- Grails Controller Unit Test - validate json requests bind to a command object
+- Grails Controller Integration Test - end to end tests and json responses
