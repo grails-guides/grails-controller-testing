@@ -13,7 +13,7 @@ include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentCon
 
 When unit testing controllers, we are able to use the `@TestFor` mixin to provide accessible properties to validate the controller. The `controller`,
 `model`, `request`, `response`, and `view` are all available in the Spec class. Add a `given:` clause with data setup to the
-`Test the index action returns the correct model` spock test to validate the correct model and count are returned.
+`Test the index action returns the correct model` spock test. Then adjust the code to validate the correct model and count are returned.
 
 [source, groovy]
 .src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy

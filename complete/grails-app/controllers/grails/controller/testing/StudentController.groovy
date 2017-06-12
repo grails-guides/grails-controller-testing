@@ -8,7 +8,10 @@ class StudentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    // tag::injectedStudentService[]
     StudentService studentService
+
+    // end::injectedStudentService[]
 
     // tag::indexMethod[]
     def index(Integer max) {
@@ -115,8 +118,11 @@ class StudentController {
         }
     }
 
+    // tag::calculateAvgGradeMethod[]
     def calculateAvgGrade() {
         BigDecimal avgGrade = studentService.calculateAvgGrade()
         render"Avg Grade is ${avgGrade}"
     }
+
+    // end::calculateAvgGradeMethod[]
 }

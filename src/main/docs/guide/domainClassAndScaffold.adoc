@@ -34,6 +34,8 @@ You should have the following files generated:
 .src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
 ----
 
+[fuchsia]#Before continuing please delete src/test/groovy/grails/controller/testing/StudentSpec.groovy#
+
 In the `BootStrap.groovy`, let's create some seed data to make sure our application operates correctly.
 We will create sample students in development mode.
 
@@ -44,7 +46,7 @@ include::{sourceDir}/grails-app/init/grails/controller/testing/BootStrap.groovy[
 ----
 
 Let's do a dry run of the application. We should be able to click on `StudentController`
-and see the list of students in the scaffolding page.
+and see the list of students in the scaffolding page. Go to `http://localhost:8080`.
 
 [source, bash]
 ----

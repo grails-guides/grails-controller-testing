@@ -2,10 +2,26 @@ Our Controller will call a service that calculates the average grade of all stud
  of the method will execute fully. However, in a unit test we often want to mock out the service call and only validate
  that it was invoked. Let's first create the service class:
 
+ [source, bash]
+ ----
+ > grails create-service Student
+ ----
+
+[fuchsia]#Before continuing please delete src/test/groovy/grails/controller/testing/StudentServiceSpec.groovy#
+
 [source, groovy]
 .grails-app/services/grails/controller/testing/StudentService.groovy
 ----
 include::{sourceDir}/grails-app/services/grails/controller/testing/StudentService.groovy[indent=0]
+----
+
+In `StudentController` we will inject the `StudentService` and create an action which delegates to the service:
+
+[source, groovy]
+.grails-app/controllers/grails/controller/testing/StudentController.groovy
+----
+include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=injectedStudentService]
+include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=calculateAvgGradeMethod]
 ----
 
 In `StudentControllerSpec` we need to mock the service and inject it into the controller. We also validate that the service

@@ -26,3 +26,10 @@ include::{sourceDir}/src/integration-test/groovy/grails/controller/testing/Stude
 <2> `serverPort` is automatically injected here
 <3> use the `RestResponse` object to validate items
 <3> invocation of the controller action will run end to end
+
+Execute the test
+
+[source, bash]
+----
+> grails test-app -integration
+----
