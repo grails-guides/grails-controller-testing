@@ -1,0 +1,30 @@
+Our Controller will call a service that calculates the average grade of all students. When we run the application the functionality
+ of the method will execute correctly. However, in a unit test we often want to mock out the service call and validate
+ that it was invoked. Let's first create the service class:
+
+[source, groovy]
+.grails-app/services/grails/controller/testing/StudentService.groovy
+----
+include::{sourceDir}/grails-app/services/grails/controller/testing/StudentService.groovy[indent=0]
+----
+
+In `StudentControllerSpec` we need to mock the service and inject it into the controller. We also validate that the service
+method is being executed once and will return 100. Use the `response` property to assert the returning text.
+
+[source, groovy]
+.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+----
+    //...
+    def setup() {
+        controller.studentService = Mock(StudentService)
+    }
+    //...
+    void "Test controller correctly calls service method"() {
+        when: "controller is invoked to calculate grades"
+            controller.calculateAvgGrade()
+
+        then: "verify the service was called and response received"
+            response.text == "Avg Grade is 100"
+            1 * controller.studentService.calculateAvgGrade() >> 100
+    }
+----

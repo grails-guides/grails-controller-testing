@@ -6,7 +6,7 @@ writingTheApp:
   title: Writing the Application
   domainClassAndScaffold: Domain Class and Scaffold
   unitTestModelView: Unit Test Model and View
-  dynamicFinderServiceTests: HibernateSpec
+  unitTestServiceMethodCall: Unit Test Service Method Call
   gormService: Projection Query
   integrationTests: Service Integration tests
   serviceWithCollaborators: Service with Collaborators

@@ -49,6 +49,7 @@ method appropriately. Also notice in the Spec how we can manipulate the `content
 `redirectedUrl` property in the `response`:
 
 [source, groovy]
+.sample code snippets
 ----
 request.contentType = FORM_CONTENT_TYPE
 request.method = 'POST'
@@ -60,11 +61,13 @@ Your resulting code should resemble below:
 [source, groovy]
 .src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
 ----
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specBeginning]
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=populateParams]
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=testIndex]
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=testSave]
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specEnding]
+include::{sourceDir}/src/version-code/StudentControllerSpec.groovy_v1[indent=0]
 ----
 
-<3> Since the save method is restricted to POST, we must specify the request.method is a POST call
+<1> Since the save method is restricted to POST, we must specify the request.method is a POST call
+<2> Validate the redirectedUrl
+
+[big]*Edit, Delete, Update, Show Actions*
+
+Take a look at the entire `StudentControllerSpec` that was generated and observe the rest of the tests. They also make use of the
+`controller, model, request, response, and view` properties to validate the functionality of the actions.

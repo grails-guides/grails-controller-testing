@@ -1,0 +1,42 @@
+package grails.controller.testing
+
+import grails.test.mixin.*
+import spock.lang.*
+
+@TestFor(StudentController)
+@Mock(Student)
+class StudentControllerSpec extends Specification {
+
+    def populateValidParams(params) {
+        assert params != null
+
+        params["name"] = 'Nirav'
+        params["grade"] = 100
+    }
+
+    void "Test the save action correctly persists an instance"() {
+
+        when:"The save action is executed with an invalid instance"
+            request.contentType = FORM_CONTENT_TYPE
+            request.method = 'POST' // <1>
+            def student = new Student()
+            student.validate()
+            controller.save(student)
+
+        then:"The create view is rendered again with the correct model"
+            model.student!= null
+            view == 'create'
+
+        when:"The save action is executed with a valid instance"
+            response.reset()
+            populateValidParams(params)
+            student = new Student(params)
+
+            controller.save(student)
+
+        then:"A redirect is issued to the show action"
+            response.redirectedUrl == '/student/show/1' // <2>
+            controller.flash.message != null
+            Student.count() == 1
+    }
+}
