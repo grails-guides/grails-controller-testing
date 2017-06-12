@@ -18,11 +18,10 @@ class StudentControllerIntSpec extends Specification {
     void "test json in URI to return students"() {
         when:
             RestBuilder rest = new RestBuilder()
-            RestResponse resp = rest.get("http://localhost:${serverPort}/student.json")
-            println resp.json
+            RestResponse resp = rest.get("http://localhost:${serverPort}/student.json") // <1> <2>
 
         then:
-            resp.status == 200
+            resp.status == 200 // <3>
             resp.json.size() == 3
             resp.json.toString() ==
                     """[{"grade":100,"name":"Nirav","id":1},{"grade":95,"name":"Jeff","id":2},{"grade":90,"name":"Sergio","id":3}]"""
@@ -31,7 +30,7 @@ class StudentControllerIntSpec extends Specification {
     void "test calculateAvg grade end to end"() {
         when:
             RestBuilder rest = new RestBuilder()
-            def resp = rest.get("http://localhost:${serverPort}/student/calculateAvgGrade")
+            def resp = rest.get("http://localhost:${serverPort}/student/calculateAvgGrade") // <4>
 
         then:
             resp.status == 200
