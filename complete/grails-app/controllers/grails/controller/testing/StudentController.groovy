@@ -56,6 +56,7 @@ class StudentController {
         respond student
     }
 
+    // tag::updateMethod[]
     @Transactional
     def update(Student student) {
 
@@ -82,6 +83,7 @@ class StudentController {
             '*'{ respond student, [status: OK] }
         }
     }
+    // end::updateMethod[]
 
     @Transactional
     def delete(Student student) {

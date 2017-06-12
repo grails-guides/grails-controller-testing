@@ -7,8 +7,8 @@ writingTheApp:
   domainClassAndScaffold: Domain Class and Scaffold
   unitTestModelView: Unit Test Model and View
   unitTestServiceMethodCall: Unit Test Service Method Call
-  gormService: Projection Query
-  integrationTests: Service Integration tests
+  unitTestParamBinding: Unit Test Param Binding to Command Object
+  unitTestJsonRequest: Unit Test Json Request
   serviceWithCollaborators: Service with Collaborators
   testEmailWithMock: Test Email with Mock Collaborators
   testEmailWithExpando: Test Email with Expando
