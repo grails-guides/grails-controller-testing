@@ -1,5 +1,5 @@
 Grails also supports data binding of JSON requests to command objects. From a client standpoint it works in a similar fashion
-where we can fill the request with JSON data and then invoke the action method, which has a command object. We will save
+to params where we can fill the request with JSON data and then invoke the action method, which has a command object. We will save
 a new student two different ways:
 
 - 1) use a domain object that will be be converted to JSON automatically

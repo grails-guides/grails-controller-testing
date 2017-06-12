@@ -1,4 +1,4 @@
-We are going to write a very simple CRUD application involving one domain class `Student`.
+We are going to write a simple CRUD application involving one domain class `Student`.
 
 We will have one service class that simply calculates the students grade average. We will be able to explore
 Controller testing approaches within this context.

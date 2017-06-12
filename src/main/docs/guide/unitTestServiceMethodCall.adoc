@@ -1,5 +1,5 @@
-Our Controller will call a service that calculates the average grade of all students. When we run the application the functionality
- of the method will execute correctly. However, in a unit test we often want to mock out the service call and validate
+Our Controller will call a service that calculates the average grade of all students. When we run the application, the functionality
+ of the method will execute fully. However, in a unit test we often want to mock out the service call and only validate
  that it was invoked. Let's first create the service class:
 
 [source, groovy]
@@ -9,7 +9,7 @@ include::{sourceDir}/grails-app/services/grails/controller/testing/StudentServic
 ----
 
 In `StudentControllerSpec` we need to mock the service and inject it into the controller. We also validate that the service
-method is being executed once and will return 100. Use the `response` property to assert the returning text.
+method is being executed once and will return `100`. Use the `response` property to assert the returning text.
 
 [source, groovy]
 .src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy

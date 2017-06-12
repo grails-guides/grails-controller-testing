@@ -10,10 +10,10 @@ dependencies {
 ----
 
 We can invoke the controller actions by using the appropriate URL in the `RestBuilder` API. We will get back a
-`RestResponse` object and using that object we can validate the returned items of the controller. The first test
+`RestResponse` object and with that object we can validate the returned items of the controller. The first test
 will invoke the `index()` action and return a JSON list of students. The second test will invoke the service action to
 calculate the average grades. Note that the integration test will actually execute the service method for a result as
-opposed to the unit test which mocks it out. Also note `serverPort` property is automatically injected.
+opposed to the unit test which mocks it out. Also note the `serverPort` property is automatically injected.
 It contains the random port where the Grails application runs during the functional test.
 
 [source, groovy]
@@ -22,7 +22,7 @@ It contains the random port where the Grails application runs during the functio
 include::{sourceDir}/src/integration-test/groovy/grails/controller/testing/StudentControllerIntSpec.groovy[indent=0]
 ----
 
-<1> `.json` can be included in the URL to declare we want a JSON response.
+<1> `.json` can be appended to the URL to declare we want a JSON response.
 <2> `serverPort` is automatically injected here
 <3> use the `RestResponse` object to validate items
 <3> invocation of the controller action will run end to end

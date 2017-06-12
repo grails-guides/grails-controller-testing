@@ -1,7 +1,7 @@
-Grails automatically binds HTTP params to a Command Object in a controller action method. In a unit test, you can specify
-params and then invoke the controller action. Those params will bind to the command object by attribute name and type. In
-this example we will update a students' name that is misspelled. Here is the update action in the controller. Notice the
-parameter to the action is `Student` - this acts as the command object.
+Grails automatically binds HTTP `params` to a Command Object in a controller action method. In a unit test, you can specify
+`params` and then invoke the controller action. Those `params` will bind to the command object by attribute name and type. In
+this example we will update a student's name that is misspelled. Here is the update action in the controller: (Notice the
+parameter to the action is `Student` - this acts as the command object).
 
 [source, groovy]
 .grails-app/controllers/grails/controller/testing/StudentController.groovy
@@ -9,8 +9,9 @@ parameter to the action is `Student` - this acts as the command object.
 include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=updateMethod]
 ----
 
-In `StudentControllerSpec`, first make the request `PUT`. Then we can save a misspelled student with a grade that will not change.
-Give params (including a correction to the name) that will bind to the Command Object, and invoke the `update()` action.
+In `StudentControllerSpec`, first make the request `PUT`. Then we can save a misspelled student. The student will have a grade
+that will not change. Give params (including a correction to the name) that will bind to the Command Object, and invoke
+the `update()` action.
 
 [source, groovy]
 .src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
