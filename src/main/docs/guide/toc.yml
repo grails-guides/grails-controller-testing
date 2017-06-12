@@ -8,10 +8,8 @@ writingTheApp:
   unitTestModelView: Unit Test Model and View
   unitTestServiceMethodCall: Unit Test Service Method Call
   unitTestParamBinding: Unit Test Param Binding to Command Object
-  unitTestJsonRequest: Unit Test Json Request
-  serviceWithCollaborators: Service with Collaborators
-  testEmailWithMock: Test Email with Mock Collaborators
-  testEmailWithExpando: Test Email with Expando
+  unitTestJsonRequest: Unit Test JSON Request
+  integrationTestController: Integration Test Controller
 summary:
   title: Summary
 runningTheApp:

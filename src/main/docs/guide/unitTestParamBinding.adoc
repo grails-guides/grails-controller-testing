@@ -30,3 +30,10 @@ Give params (including a correction to the name) that will bind to the Command O
             model.student.grade == 100
     }
 ----
+
+Execute the tests again to make sure we are on track.
+
+[source, bash]
+----
+> grails test-app -unit
+----
