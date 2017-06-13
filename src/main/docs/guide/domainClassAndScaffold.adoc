@@ -34,7 +34,7 @@ You should have the following files generated:
 .src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
 ----
 
-[fuchsia]#Before continuing please delete src/test/groovy/grails/controller/testing/StudentSpec.groovy#
+*_Before continuing please delete src/test/groovy/grails/controller/testing/StudentSpec.groovy_*
 
 In the `BootStrap.groovy`, let's create some seed data to make sure our application operates correctly.
 We will create sample students in development mode.

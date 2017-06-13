@@ -7,7 +7,7 @@ Our Controller will call a service that calculates the average grade of all stud
  > grails create-service Student
  ----
 
-[fuchsia]#Before continuing please delete src/test/groovy/grails/controller/testing/StudentServiceSpec.groovy#
+*_Before continuing please delete src/test/groovy/grails/controller/testing/StudentServiceSpec.groovy_*
 
 [source, groovy]
 .grails-app/services/grails/controller/testing/StudentService.groovy
