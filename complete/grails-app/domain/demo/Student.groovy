@@ -10,7 +10,4 @@ class Student {
     String toString() {
         name
     }
-
-    static constraints = {
-    }
 }
