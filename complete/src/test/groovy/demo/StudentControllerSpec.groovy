@@ -1,218 +1,267 @@
-// tag::specBeginning[]
+// tag::unitTestPackageImport[]
 package demo
+// end::unitTestPackageImport[]
 
-import demo.BootStrap
-import demo.Student
-import demo.StudentService
-import grails.test.mixin.*
-import spock.lang.*
+// tag::unitTestImports[]
+import grails.test.mixin.TestFor
+import grails.test.mixin.Mock
+import spock.lang.Specification
+// end::unitTestImports[]
 
+// tag::unitTestClassDeclaration[]
 @TestFor(StudentController)
-@Mock(Student)
 class StudentControllerSpec extends Specification {
-
-// end::specBeginning[]
-
-    def setup() {
-        controller.studentService = Mock(StudentService)
-    }
-
-    // tag::populateParams[]
-    def populateValidParams(params) {
-        assert params != null
-
-        params["name"] = 'Nirav'
-        params["grade"] = 100
-    }
-
-    // end::populateParams[]
+// end::unitTestClassDeclaration[]
 
     // tag::testIndex[]
-    void "Test the index action returns the correct model"() {
+    def 'Test the index action returns the correct model'() {
         given:
-            BootStrap.initStudents() // <1>
+        List<Student> sampleStudents = [new Student(name: 'Nirav', grade: 100),
+                                        new Student(name: 'Jeff', grade: 95),
+                                        new Student(name: 'Sergio', grade: 90),]
+        controller.studentService = Stub(StudentService) {
+            list(_) >> sampleStudents
+            count() >> sampleStudents.size()
+        }
 
-        when:"The index action is executed"
-            controller.index()
+        when: 'The index action is executed'
+        controller.index()
 
-        then:"The model is correct"
-            model.studentList  // <2>
-            model.studentCount == 3
+        then: 'The model is correct'
+        model.studentList // <1>
+        model.studentList.size() == 3
+        model.studentList.find { it.name == 'Nirav' && it.grade == 100 }
+        model.studentList.find { it.name == 'Jeff' && it.grade == 95 }
+        model.studentList.find { it.name == 'Sergio' && it.grade == 90 }
+        model.studentCount == 3
     }
-
     // end::testIndex[]
 
-    void "Test the create action returns the correct model"() {
-        when:"The create action is executed"
-            controller.create()
-
-        then:"The model is correctly created"
-            model.student!= null
-    }
-
-    // tag::testSave[]
-    void "Test the save action correctly persists an instance"() {
-
-        when:"The save action is executed with an invalid instance"
-            request.contentType = FORM_CONTENT_TYPE
-            request.method = 'POST' // <3>
-            def student = new Student()
-            student.validate()
-            controller.save(student)
-
-        then:"The create view is rendered again with the correct model"
-            model.student!= null
-            view == 'create'
-
-        when:"The save action is executed with a valid instance"
-            response.reset()
-            populateValidParams(params)
-            student = new Student(params)
-
-            controller.save(student)
-
-        then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/student/show/1'
-            controller.flash.message != null
-            Student.count() == 1
-    }
-
-    // end::testSave[]
-
-    void "Test that the show action returns the correct model"() {
-        when:"The show action is executed with a null domain"
-            controller.show(null)
-
-        then:"A 404 error is returned"
-            response.status == 404
-
-        when:"A domain instance is passed to the show action"
-            populateValidParams(params)
-            def student = new Student(params)
-            controller.show(student)
-
-        then:"A model is populated containing the domain instance"
-            model.student == student
-    }
-
-    void "Test that the edit action returns the correct model"() {
-        when:"The edit action is executed with a null domain"
-            controller.edit(null)
-
-        then:"A 404 error is returned"
-            response.status == 404
-
-        when:"A domain instance is passed to the edit action"
-            populateValidParams(params)
-            def student = new Student(params)
-            controller.edit(student)
-
-        then:"A model is populated containing the domain instance"
-            model.student == student
-    }
-
-    void "Test the update action performs an update on a valid domain instance"() {
-        when:"Update is called for a domain instance that doesn't exist"
-            request.contentType = FORM_CONTENT_TYPE
-            request.method = 'PUT'
-            controller.update(null)
-
-        then:"A 404 error is returned"
-            response.redirectedUrl == '/student/index'
-            flash.message != null
-
-        when:"An invalid domain instance is passed to the update action"
-            response.reset()
-            def student = new Student()
-            student.validate()
-            controller.update(student)
-
-        then:"The edit view is rendered again with the invalid instance"
-            view == 'edit'
-            model.student == student
-
-        when:"A valid domain instance is passed to the update action"
-            response.reset()
-            populateValidParams(params)
-            student = new Student(params).save(flush: true)
-            controller.update(student)
-
-        then:"A redirect is issued to the show action"
-            student != null
-            response.redirectedUrl == "/student/show/$student.id"
-            flash.message != null
-    }
-
-    void "Test that the delete action deletes an instance if it exists"() {
-        when:"The delete action is called for a null instance"
-            request.contentType = FORM_CONTENT_TYPE
-            request.method = 'DELETE'
-            controller.delete(null)
-
-        then:"A 404 is returned"
-            response.redirectedUrl == '/student/index'
-            flash.message != null
-
-        when:"A domain instance is created"
-            response.reset()
-            populateValidParams(params)
-            def student = new Student(params).save(flush: true)
-
-        then:"It exists"
-            Student.count() == 1
-
-        when:"The domain instance is passed to the delete action"
-            controller.delete(student)
-
-        then:"The instance is deleted"
-            Student.count() == 0
-            response.redirectedUrl == '/student/index'
-            flash.message != null
-    }
-
-    void "Test controller correctly calls service method"() {
-        when: "controller is invoked to calculate grades"
-            controller.calculateAvgGrade()
-
-        then: "verify the service was called and response received"
-            response.text == "Avg Grade is 100"
-            1 * controller.studentService.calculateAvgGrade() >> 100
-    }
-
-    void "test update with param inputs to a command object" () {
-        when: "student is saved initially"
-            request.method = 'PUT'
-            def student = new Student(name: "Niraaav_misspelled", grade: 100)
-            student.save()
-            params.id = student.id
-            params.name = 'Nirav'
-            controller.update()
+    // tag::testShow[]
+    def 'show action returns 404, if the user does not supply the student ID'() {
+        when:
+        controller.show()
 
         then:
-            model.student.name == "Nirav"
-            model.student.grade == 100
+        response.status == 404
     }
 
-    void "test save with json request - domain conversion"() {
-
-        when: "json request is sent with domain conversion"
-            request.method = 'POST'
-            request.json = new Student(name: "Nirav", grade: 87)
-            controller.save()
+    def 'show action returns the correct model'() {
+        given:
+        String name = 'Nirav'
+        BigDecimal grade = 100
+        Long id = 1l
+        controller.studentService = Stub(StudentService) {
+            read(_) >> new Student(name: name, grade: grade, id: id)
+        }
+        when:
+        params['id'] = id
+        controller.show()
 
         then:
-            Student.count() == 1
+        model.student
+        model.student.name == name
+        model.student.grade == grade
     }
+    // end::testShow[]
 
-    void "test save with json request - raw json"() {
-        when: "json request is sent with domain conversion"
-            request.method = 'POST'
-            request.json = '{"name":"Rina","grade":85}'
-            controller.save()
+    // tag:testCreate[]
+    def 'Test the create action returns the correct model'() {
+        given:
+        controller.studentService = Stub(StudentService) {
+            create(_) >> new Student()
+        }
+        when: 'The create action is executed'
+        controller.create()
+
+        then: 'A student instantiated by the service layer is passed to the model'
+        model.student
+    }
+    // end:testCreate[]
+
+    // tag::testSave1[]
+    def 'If you save without supplying name and grade(both required) you remain in the create form'() {
+
+        when:
+        request.contentType = FORM_CONTENT_TYPE // <1>
+        request.method = 'POST' // <2>
+        controller.save()
 
         then:
-            Student.count() == 1
+        model.student
+        view == 'create' // <3>
     }
+    // end::testSave1[]
+
+    // tag::testSave2[]
+    def 'if the users supplies both name and grade, save is successful '() {
+        given:
+        String name = 'Nirav'
+        BigDecimal grade = 100
+        Long id = 1
+        controller.studentService = Stub(StudentService) {
+            save(_,_) >> new Student(name: name, grade: grade, id: id)
+            read(_) >> new Student(name: name, grade: grade, id: id)
+        }
+        when:
+        request.method = 'POST'
+        request.contentType = FORM_CONTENT_TYPE
+        params['name'] =  name // <1>
+        params['grade'] = grade
+        controller.save() // <2>
+
+        then: 'a message indicating that the user has been saved is placed'
+        flash.message // <3>
+
+        and: 'the user is redirected to show the student'
+        response.redirectedUrl.startsWith('/student/show') // <4>
+
+        and: 'a found response code is used'
+        response.status == 302 // <5>
+    }
+    // end::testSave2[]
+
+    // tag::testSave3[]
+    void 'JSON payload is bound to the command object. If the student is saved, a 201 is returned'() {
+        given:
+        String name = 'Nirav'
+        BigDecimal grade = 100
+        Long id = 1
+        controller.studentService = Stub(StudentService) {
+            save(_,_) >> new Student(name: name, grade: grade, id: id)
+        }
+
+        when: 'json request is sent with domain conversion'
+        request.method = 'POST'
+        request.json = '{"name":"'+name+'","grade":'+grade+'}' // <1>
+        controller.save()
+
+        then: 'CREATED status code is set'
+        response.status == 201 // <2>
+    }
+    // end::testSave3[]
+
+    // tag::testEdit
+    def '404 is returned if user tries to edit a null domain'() {
+        when:
+        controller.edit(null)
+
+        then:
+        response.status == 404
+    }
+
+    def "trying to edit an existing domain class populates the model"() {
+        given:
+        String name = 'Nirav'
+        BigDecimal grade = 100
+        Long id = 1
+        controller.studentService = Stub(StudentService) {
+            read(_) >> new Student(name: name, grade: grade, id: id)
+        }
+        when:
+        params['id'] = id
+        controller.edit()
+
+        then:
+        model.student
+        model.student.name == name
+        model.student.grade == grade
+    }
+    // end::testEdit[]
+
+    // tag::testUpdate[]
+    def "if a user tries to update a null domain class, he gets redirected to the student listing"() {
+        when:
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'PUT'
+        controller.update()
+
+        then:
+        response.status == 302
+        response.redirectedUrl == '/student/index'
+        flash.message != null
+    }
+
+    def 'try to update without supplying name and grade(both required) redirect to edit page again'() {
+        when:
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'PUT'
+        params.id = 1l
+        controller.update()
+
+        then:
+        response.status == 200
+        view == 'edit'
+    }
+
+    def "successful update redirects to the updated student and displays a message"() {
+        String name = 'Nirav'
+        BigDecimal grade = 100
+        Long id = 1
+        controller.studentService = Stub(StudentService) {
+            update(_,_) >> new Student(name: name, grade: grade, id: id)
+        }
+
+        when:
+        request.contentType = FORM_CONTENT_TYPE
+        params.id = id
+        params.grade = grade
+        params.name = name
+        request.method = 'PUT'
+        controller.update()
+
+        then: 'A redirect is issued to the show action'
+        response.redirectedUrl.startsWith('/student/show')
+
+        and: 'A message indicating the student has been updated is present'
+        flash.message
+    }
+    // end::testUpdate[]
+
+    // tag::testDelete[]
+    def "trying to delete a null domain class, redirects the user to the students' listing"() {
+        when:
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'DELETE'
+        controller.delete()
+
+        then:
+        response.redirectedUrl == '/student/index'
+        flash.message != null
+    }
+
+    void 'Test that the delete action deletes an instance if it exists'() {
+        given:
+        controller.studentService = Stub(StudentService) {
+            delete(_) >> true
+        }
+        when: 'A domain instance is created'
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'DELETE'
+        params.id = 1l
+        controller.delete()
+
+        then: "user gets redirected to the students' listing"
+        response.redirectedUrl == '/student/index'
+
+        and: 'A mesage is populated indicating the successful deletion'
+        flash.message
+    }
+    // end::testDelete[]
+
+    // tag::testCalculateAvgGrade[]
+    void 'Test controller correctly calls service method'() {
+        given:
+        controller.studentService = Mock(StudentService)
+
+        when: 'controller is invoked to calculate grades'
+        controller.calculateAvgGrade()
+
+        then: 'verify the service was called and response received'
+        response.text == "Avg Grade is 100"
+        1 * controller.studentService.calculateAvgGrade() >> 100
+    }
+    // end::testCalculateAvgGrade[]
 // tag::specEnding[]
 }
 // end::specEnding[]

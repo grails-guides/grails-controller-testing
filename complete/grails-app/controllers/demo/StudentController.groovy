@@ -1,128 +1,160 @@
+// tag::controllerPackageImport[]
 package demo
+// end::controllerPackageImport[]
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
+// tag::controllerImports[]
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.OK
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.NO_CONTENT
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+// end::controllerImports[]
 
-@Transactional(readOnly = true)
+// tag::classDeclaration[]
+@CompileStatic
 class StudentController {
+// end::classDeclaration[]
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+// tag::allowedMethods[]
+    static allowedMethods = [save: 'POST',
+                             update: 'PUT',
+                             delete: 'DELETE',]
+// end::allowedMethods[]
 
     // tag::injectedStudentService[]
     StudentService studentService
-
     // end::injectedStudentService[]
 
-    // tag::indexMethod[]
+    // tag::indexAction[]
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Student.list(params), model:[studentCount: Student.count()]
+        List<Student> studentList = studentService.list(params)
+        respond studentList, model: [studentCount: studentService.count()]
     }
-    // end::indexMethod[]
+    // end::indexAction[]
 
-    def show(Student student) {
-        respond student
-    }
-
-    def create() {
-        respond new Student(params)
-    }
-
-    // tag::saveMethod[]
-    @Transactional
-    def save(Student student) {
-        if (student == null) {
-            transactionStatus.setRollbackOnly()
+    // tag::showAction[]
+    def show(Long id) {
+        if (!id) {
             notFound()
             return
         }
+        respond studentService.read(id)
+    }
+    // end::showAction[]
 
-        if (student.hasErrors()) {
-            transactionStatus.setRollbackOnly()
+    // tag::createAction[]
+    def create() {
+        respond studentService.create(params)
+    }
+    // end::createAction[]
+
+    // tag::editAction[]
+    def edit(Long id) {
+        if (!id) {
+            notFound()
+            return
+        }
+        respond studentService.read(id)
+    }
+    // end::editAction[]
+
+    // tag::saveAction[]
+    @CompileDynamic
+    def save(StudentSaveCommand cmd) {
+        if (cmd.hasErrors()) { // <1>
+            respond cmd.errors, [model: [student: cmd], view: 'create']
+            return
+        }
+
+        Student student = studentService.save(cmd, true) // <2>
+        if (student.hasErrors()) { // <3>
             respond student.errors, view:'create'
             return
         }
 
-        student.save flush:true
-
-        request.withFormat {
-            form multipartForm {
+        request.withFormat {  // <4>
+            form multipartForm {  // <5>
                 flash.message = message(code: 'default.created.message', args: [message(code: 'student.label', default: 'Student'), student.id])
-                redirect student
+                redirect(action: 'show', id: student.id)
             }
             '*' { respond student, [status: CREATED] }
         }
     }
-    // end::saveMethod[]
+    // end::saveAction[]
 
-    def edit(Student student) {
-        respond student
-    }
-
-    // tag::updateMethod[]
-    @Transactional
-    def update(Student student) {
-
-        def list = Student.list()
-        if (student == null) {
-            transactionStatus.setRollbackOnly()
+    // tag::updateAction[]
+    @CompileDynamic
+    def update(StudentUpdateCommand cmd) {
+        if ( !cmd.id ) {
             notFound()
             return
         }
 
-        if (student.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond student.errors, view:'edit'
+        if (cmd.hasErrors()) {
+            respond cmd.errors, [model: [student: cmd], view: 'edit']
             return
         }
 
-        student.save flush:true
-
+        Student student = studentService.update(cmd, true)
+        if ( student == null ) {
+            notFound()
+            return
+        }
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'student.label', default: 'Student'), student.id])
-                redirect student
+                redirect(action: 'show', id: student.id)
             }
             '*'{ respond student, [status: OK] }
         }
     }
-    // end::updateMethod[]
+    // end::updateAction[]
 
-    @Transactional
-    def delete(Student student) {
-
-        if (student == null) {
-            transactionStatus.setRollbackOnly()
+    // tag::deleteAction[]
+    @CompileDynamic
+    def delete(Long id) {
+        if (!id) {
             notFound()
             return
         }
 
-        student.delete flush:true
+        boolean found = studentService.delete(id, true)
+        if (!found) {
+            notFound()
+            return
+        }
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'student.label', default: 'Student'), student.id])
-                redirect action:"index", method:"GET"
+                redirect(action: 'index', method: 'GET')
             }
             '*'{ render status: NO_CONTENT }
         }
     }
+    // end::deleteAction[]
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'student.label', default: 'Student'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
-
-    // tag::calculateAvgGradeMethod[]
+    // tag::calculateAvgGradeAction[]
     def calculateAvgGrade() {
         BigDecimal avgGrade = studentService.calculateAvgGrade()
         render"Avg Grade is ${avgGrade}"
     }
+    // end::calculateAvgGradeAction[]
 
-    // end::calculateAvgGradeMethod[]
+    // tag::notFoundMethod[]
+    @CompileDynamic
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'student.label', default: 'Student'), params.id])
+                redirect(action: 'index', method: 'GET')
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
+    // tag::notFoundMethod[]
+//tag::close[]
 }
+//end::close[]

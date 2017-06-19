@@ -5,12 +5,14 @@ gettingStarted:
 writingTheApp:
   title: Writing the Application
   domainClassAndScaffold: Domain Class and Scaffold
-  unitTestModelView: Unit Test Model and View
-  unitTestServiceMethodCall: Unit Test Service Method Call
-  unitTestParamBinding: Unit Test Param Binding to Command Object
-  unitTestJsonRequest: Unit Test JSON Request
-  integrationTestController: Integration Test Controller
+  staticScaffolding: Static Scaffolding
+  unitTestIndex: Unit Test - Index Method
+  unitTestSave: Unit Test - Save Method
+  allowedMethods: Test Allowed Methods
+  functionalTestController: Functional Test
 summary:
   title: Summary
 runningTheApp:
   title: Running the Application
+helpWithGrails:
+  title: Help with Grails  

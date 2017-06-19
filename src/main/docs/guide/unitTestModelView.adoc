@@ -1,38 +1,3 @@
-The `StudentControllerSpec` is generated with template code to test the standard CRUD functions of the
-`StudentController` class. Let's use this as a starting point to test the `StudentController`.
-
-[big]*Validate the Model Returned*
-
-The `index()` action method returns a `studentList` and `count` as a model back to the view.
-
-[source, groovy]
-.grails-app/controllers/demo/StudentController.groovy
-----
-include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tags=indexMethod]
-----
-
-When unit testing controllers, we are able to use the `@TestFor` mixin to provide accessible properties to validate the controller. The `controller`,
-`model`, `request`, `response`, and `view` are all available in the Spec class. Add a `given:` clause with data setup to the
-`Test the index action returns the correct model` spock test. Then adjust the code to validate the correct model and count are returned.
-
-[source, groovy]
-.src/test/groovy/demo/StudentControllerSpec.groovy
-----
-include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specBeginning]
-include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=testIndex]
-include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specEnding]
-----
-
-<1> Creates data in the mock GORM API
-<2> Access the returned model to validate
-
-Execute the test. The test we augmented should pass while the others will still fail.
-
-[source, bash]
-----
-> grails test-app -unit
-----
-
 [big]*Validate View and Response Redirect on Save*
 
 The `save()` action method checks for `null` or errors, saves a student, then proceeds to return a student back to the model.
