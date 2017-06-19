@@ -1,5 +1,6 @@
-package grails.controller.testing
+package demo
 
+import demo.BootStrap
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
 import grails.test.mixin.integration.Integration

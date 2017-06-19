@@ -1,5 +1,6 @@
-package grails.controller.testing
+package demo
 
+import demo.Student
 import grails.util.Environment
 
 class BootStrap {

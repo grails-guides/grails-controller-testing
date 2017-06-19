@@ -1,6 +1,9 @@
 // tag::specBeginning[]
-package grails.controller.testing
+package demo
 
+import demo.BootStrap
+import demo.Student
+import demo.StudentService
 import grails.test.mixin.*
 import spock.lang.*
 

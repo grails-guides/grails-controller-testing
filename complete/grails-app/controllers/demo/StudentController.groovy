@@ -1,4 +1,4 @@
-package grails.controller.testing
+package demo
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional

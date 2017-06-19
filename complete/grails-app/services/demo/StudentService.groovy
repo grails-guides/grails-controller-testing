@@ -1,5 +1,6 @@
-package grails.controller.testing
+package demo
 
+import demo.Student
 import grails.transaction.Transactional
 import groovy.transform.CompileStatic
 

@@ -1,4 +1,4 @@
-package grails.controller.testing
+package demo
 
 class UrlMappings {
 
