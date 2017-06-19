@@ -1,6 +1,5 @@
 package demo
 
-import demo.Student
 import grails.util.Environment
 
 class BootStrap {
@@ -13,15 +12,11 @@ class BootStrap {
     }
 
     static void initStudents() {
-        List<Map<String, Object>> students = [
-                [name: 'Nirav', grade: 100],
-                [name: 'Jeff', grade: 95],
-                [name: 'Sergio', grade: 90]
-        ]
-
-        for ( Map<String, Object> s : students ) {
-            new Student(name: s.name, grade: s.grade).save(flush: true)
-        }
+        Student.saveAll(
+                new Student(name: 'Nirav', grade: 100),
+                new Student(name: 'Jeff', grade: 95),
+                new Student(name: 'Sergio', grade: 90),
+        )
     }
 
     def destroy = {
