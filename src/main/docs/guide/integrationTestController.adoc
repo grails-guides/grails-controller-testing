@@ -17,9 +17,9 @@ opposed to the unit test which mocks it out. Also note the `serverPort` property
 It contains the random port where the Grails application runs during the functional test.
 
 [source, groovy]
-.src/integration-test/groovy/grails/controller/testing/StudentControllerIntSpec.groovy
+.src/integration-test/groovy/demo/StudentControllerIntSpec.groovy
 ----
-include::{sourceDir}/src/integration-test/groovy/grails/controller/testing/StudentControllerIntSpec.groovy[indent=0]
+include::{sourceDir}/src/integration-test/groovy/demo/StudentControllerIntSpec.groovy[indent=0]
 ----
 
 <1> `.json` can be appended to the URL to declare we want a JSON response.

@@ -7,28 +7,28 @@ Our Controller will call a service that calculates the average grade of all stud
  > grails create-service Student
  ----
 
-*_Before continuing please delete src/test/groovy/grails/controller/testing/StudentServiceSpec.groovy_*
+*_Before continuing please delete src/test/groovy/demo/StudentServiceSpec.groovy_*
 
 [source, groovy]
-.grails-app/services/grails/controller/testing/StudentService.groovy
+.grails-app/services/demo/StudentService.groovy
 ----
-include::{sourceDir}/grails-app/services/grails/controller/testing/StudentService.groovy[indent=0]
+include::{sourceDir}/grails-app/services/demo/StudentService.groovy[indent=0]
 ----
 
 In `StudentController` we will inject the `StudentService` and create an action which delegates to the service:
 
 [source, groovy]
-.grails-app/controllers/grails/controller/testing/StudentController.groovy
+.grails-app/controllers/demo/StudentController.groovy
 ----
-include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=injectedStudentService]
-include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=calculateAvgGradeMethod]
+include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tags=injectedStudentService]
+include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tags=calculateAvgGradeMethod]
 ----
 
 In `StudentControllerSpec` we need to mock the service and inject it into the controller. We also validate that the service
 method is being executed once and will return `100`. Use the `response` property to assert the returning text.
 
 [source, groovy]
-.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+.src/test/groovy/demo/StudentControllerSpec.groovy
 ----
     //...
     def setup() {

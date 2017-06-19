@@ -6,7 +6,7 @@ a new student two different ways:
 - 2) declare a JSON object directly.
 
 [source, groovy]
-.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+.src/test/groovy/demo/StudentControllerSpec.groovy
 ----
     //...
     void "test save with json request - domain conversion"() {

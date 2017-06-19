@@ -4,9 +4,9 @@ this example we will update a student's name that is misspelled. Here is the upd
 parameter to the action is `Student` - this acts as the command object).
 
 [source, groovy]
-.grails-app/controllers/grails/controller/testing/StudentController.groovy
+.grails-app/controllers/demo/StudentController.groovy
 ----
-include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=updateMethod]
+include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tags=updateMethod]
 ----
 
 In `StudentControllerSpec`, first make the request `PUT`. Then we can save a misspelled student. The student will have a grade
@@ -14,7 +14,7 @@ that will not change. Give params (including a correction to the name) that will
 the `update()` action.
 
 [source, groovy]
-.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+.src/test/groovy/demo/StudentControllerSpec.groovy
 ----
     //...
     void "test update with param inputs to a command object" () {

@@ -6,9 +6,9 @@ The `StudentControllerSpec` is generated with template code to test the standard
 The `index()` action method returns a `studentList` and `count` as a model back to the view.
 
 [source, groovy]
-.grails-app/controllers/grails/controller/testing/StudentController.groovy
+.grails-app/controllers/demo/StudentController.groovy
 ----
-include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=indexMethod]
+include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tags=indexMethod]
 ----
 
 When unit testing controllers, we are able to use the `@TestFor` mixin to provide accessible properties to validate the controller. The `controller`,
@@ -16,11 +16,11 @@ When unit testing controllers, we are able to use the `@TestFor` mixin to provid
 `Test the index action returns the correct model` spock test. Then adjust the code to validate the correct model and count are returned.
 
 [source, groovy]
-.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+.src/test/groovy/demo/StudentControllerSpec.groovy
 ----
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specBeginning]
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=testIndex]
-include::{sourceDir}/src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy[tag=specEnding]
+include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specBeginning]
+include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=testIndex]
+include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specEnding]
 ----
 
 <1> Creates data in the mock GORM API
@@ -39,9 +39,9 @@ The `save()` action method checks for `null` or errors, saves a student, then pr
 It also redirects the student to the `show.gsp` page.
 
 [source, groovy]
-.grails-app/controllers/grails/controller/testing/StudentController.groovy
+.grails-app/controllers/demo/StudentController.groovy
 ----
-include::{sourceDir}/grails-app/controllers/grails/controller/testing/StudentController.groovy[tags=saveMethod]
+include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tags=saveMethod]
 ----
 
 In the Spec, we must provide params to the domain object `Student` to allow it to save. Add to the `populateValidParams`
@@ -59,7 +59,7 @@ response.redirectedUrl == '/student/show/1'
 Your resulting code should resemble below:
 
 [source, groovy]
-.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+.src/test/groovy/demo/StudentControllerSpec.groovy
 ----
 include::{sourceDir}/src/version-code/StudentControllerSpec.groovy_v1[indent=0]
 ----

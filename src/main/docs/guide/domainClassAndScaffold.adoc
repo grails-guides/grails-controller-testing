@@ -8,9 +8,9 @@ We will create a Domain class `Student`, with attributes `name` and `grade`.
 Add domain properties to the created class file:
 
 [source, groovy]
-.grails-app/domain/grails/controller/testing/Student.groovy
+.grails-app/domain/demo/Student.groovy
 ----
-include::{sourceDir}/grails-app/domain/grails/controller/testing/Student.groovy[indent=0]
+include::{sourceDir}/grails-app/domain/demo/Student.groovy[indent=0]
 ----
 
 Next we can quickly create a CRUD application by using the Grails command line. This will
@@ -26,23 +26,23 @@ You should have the following files generated:
 
 [source, groovy]
 ----
-.grails-app/controllers/grails/controller/testing/StudentController.groovy
+.grails-app/controllers/demo/StudentController.groovy
 .grails-app/views/student/create.gsp
 .grails-app/views/student/edit.gsp
 .grails-app/views/student/create.gsp
 .grails-app/views/student/create.gsp
-.src/test/groovy/grails/controller/testing/StudentControllerSpec.groovy
+.src/test/groovy/demo/StudentControllerSpec.groovy
 ----
 
-*_Before continuing please delete src/test/groovy/grails/controller/testing/StudentSpec.groovy_*
+*_Before continuing please delete src/test/groovy/demo/StudentSpec.groovy_*
 
 In the `BootStrap.groovy`, let's create some seed data to make sure our application operates correctly.
 We will create sample students in development mode.
 
 [source, groovy]
-.grails-app/init/grails/controller/testing/BootStrap.groovy
+.grails-app/init/demo/BootStrap.groovy
 ----
-include::{sourceDir}/grails-app/init/grails/controller/testing/BootStrap.groovy[indent=0]
+include::{sourceDir}/grails-app/init/demo/BootStrap.groovy[indent=0]
 ----
 
 Let's do a dry run of the application. We should be able to click on `StudentController`
