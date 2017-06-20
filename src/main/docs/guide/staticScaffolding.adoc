@@ -16,8 +16,8 @@ for the generated controller.
 .grails-app/controllers/demo/StudentController.groovy
 .grails-app/views/student/create.gsp
 .grails-app/views/student/edit.gsp
-.grails-app/views/student/create.gsp
-.grails-app/views/student/create.gsp
+.grails-app/views/student/index.gsp
+.grails-app/views/student/show.gsp
 .src/test/groovy/demo/StudentControllerSpec.groovy
 ----
 
