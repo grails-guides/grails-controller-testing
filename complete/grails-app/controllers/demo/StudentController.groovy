@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.NO_CONTENT
+import org.springframework.context.MessageSource
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 // end::controllerImports[]
@@ -24,6 +25,8 @@ class StudentController {
 
     // tag::injectedStudentService[]
     StudentService studentService
+
+    MessageSource messageSource
     // end::injectedStudentService[]
 
     // tag::indexAction[]
@@ -76,7 +79,8 @@ class StudentController {
 
         request.withFormat {  // <4>
             form multipartForm {  // <5>
-                flash.message = message(code: 'default.created.message', args: [message(code: 'student.label', default: 'Student'), student.id])
+                String msg = messageSource.getMessage('student.label', [] as Object[], 'Student', request.locale)
+                flash.message = messageSource.getMessage('default.created.message', [msg, student.id] as Object[], 'Student created', request.locale)
                 redirect(action: 'show', id: student.id)
             }
             '*' { respond student, [status: CREATED] }
@@ -104,7 +108,8 @@ class StudentController {
         }
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'student.label', default: 'Student'), student.id])
+                String msg = messageSource.getMessage('student.label', [] as Object[], 'Student', request.locale)
+                flash.message = messageSource.getMessage('default.updated.message', [msg, student.id] as Object[], 'Student updated', request.locale)
                 redirect(action: 'show', id: student.id)
             }
             '*'{ respond student, [status: OK] }
@@ -128,7 +133,8 @@ class StudentController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'student.label', default: 'Student'), student.id])
+                String msg = messageSource.getMessage('student.label', [] as Object[], 'Student', request.locale)
+                flash.message = messageSource.getMessage('default.deleted.message', [msg, student.id] as Object[], 'Student Deleted', request.locale)
                 redirect(action: 'index', method: 'GET')
             }
             '*'{ render status: NO_CONTENT }
@@ -139,7 +145,7 @@ class StudentController {
     // tag::calculateAvgGradeAction[]
     def calculateAvgGrade() {
         BigDecimal avgGrade = studentService.calculateAvgGrade()
-        render"Avg Grade is ${avgGrade}"
+        render messageSource.getMessage('student.average.grade', [avgGrade] as Object[], "Avg Grade is ${avgGrade}", request.locale)
     }
     // end::calculateAvgGradeAction[]
 
@@ -148,10 +154,11 @@ class StudentController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'student.label', default: 'Student'), params.id])
+                String msg = messageSource.getMessage('student.label', [] as Object[], 'Student', request.locale)
+                flash.message = messageSource.getMessage('default.not.found.message', [msg, params.id] as Object[], 'Student not found', request.locale)
                 redirect(action: 'index', method: 'GET')
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
     // tag::notFoundMethod[]
