@@ -1,5 +1,8 @@
-package grails.controller.testing
+package demo
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 class BootStrap {
 
     def init = { servletContext ->
