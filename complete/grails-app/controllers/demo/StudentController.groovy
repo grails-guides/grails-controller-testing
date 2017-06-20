@@ -1,5 +1,6 @@
 // tag::controllerPackageImport[]
 package demo
+
 // end::controllerPackageImport[]
 
 // tag::controllerImports[]
@@ -10,8 +11,10 @@ import static org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.context.MessageSource
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+
 // end::controllerImports[]
 
+@SuppressWarnings('LineLength')
 // tag::classDeclaration[]
 @CompileStatic
 class StudentController {
@@ -112,7 +115,7 @@ class StudentController {
                 flash.message = messageSource.getMessage('default.updated.message', [msg, student.id] as Object[], 'Student updated', request.locale)
                 redirect(action: 'show', id: student.id)
             }
-            '*'{ respond student, [status: OK] }
+            '*' { respond student, [status: OK] }
         }
     }
     // end::updateAction[]
@@ -137,7 +140,7 @@ class StudentController {
                 flash.message = messageSource.getMessage('default.deleted.message', [msg, student.id] as Object[], 'Student Deleted', request.locale)
                 redirect(action: 'index', method: 'GET')
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
     // end::deleteAction[]

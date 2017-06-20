@@ -12,7 +12,7 @@ class StudentService {
 
     @Transactional(readOnly = true)
     BigDecimal calculateAvgGrade() {
-        Student.where {}.projections {
+        Student.where { }.projections {
             avg('grade')
         }.get() as BigDecimal
     }
@@ -70,7 +70,4 @@ class StudentService {
         student.delete(flush: flush)
         true
     }
-
-
 }
-

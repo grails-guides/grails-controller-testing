@@ -1,11 +1,12 @@
 // tag::unitTestPackageImport[]
 package demo
+
 // end::unitTestPackageImport[]
 
 // tag::unitTestImports[]
 import grails.test.mixin.TestFor
-import grails.test.mixin.Mock
 import spock.lang.Specification
+
 // end::unitTestImports[]
 
 // tag::unitTestClassDeclaration[]
@@ -50,7 +51,7 @@ class StudentControllerSpec extends Specification {
         given:
         String name = 'Nirav'
         BigDecimal grade = 100
-        Long id = 1l
+        Long id = 1L
         controller.studentService = Stub(StudentService) {
             read(_) >> new Student(name: name, grade: grade, id: id)
         }
@@ -98,9 +99,9 @@ class StudentControllerSpec extends Specification {
         given:
         String name = 'Nirav'
         BigDecimal grade = 100
-        Long id = 1
+        Long id = 1L
         controller.studentService = Stub(StudentService) {
-            save(_,_) >> new Student(name: name, grade: grade, id: id)
+            save(_, _) >> new Student(name: name, grade: grade, id: id)
             read(_) >> new Student(name: name, grade: grade, id: id)
         }
         when:
@@ -126,14 +127,14 @@ class StudentControllerSpec extends Specification {
         given:
         String name = 'Nirav'
         BigDecimal grade = 100
-        Long id = 1
+        Long id = 1L
         controller.studentService = Stub(StudentService) {
-            save(_,_) >> new Student(name: name, grade: grade, id: id)
+            save(_, _) >> new Student(name: name, grade: grade, id: id)
         }
 
         when: 'json request is sent with domain conversion'
         request.method = 'POST'
-        request.json = '{"name":"'+name+'","grade":'+grade+'}' // <1>
+        request.json = '{"name":"' + name + '","grade":' + grade + '}' // <1>
         controller.save()
 
         then: 'CREATED status code is set'
@@ -144,7 +145,7 @@ class StudentControllerSpec extends Specification {
     // tag::testEdit
     def '404 is returned if user tries to edit a null domain'() {
         when:
-        controller.edit(null)
+        controller.edit()
 
         then:
         response.status == 404
@@ -186,7 +187,7 @@ class StudentControllerSpec extends Specification {
         when:
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        params.id = 1l
+        params.id = 1L
         controller.update()
 
         then:
@@ -199,7 +200,7 @@ class StudentControllerSpec extends Specification {
         BigDecimal grade = 100
         Long id = 1
         controller.studentService = Stub(StudentService) {
-            update(_,_) >> new Student(name: name, grade: grade, id: id)
+            update(_, _) >> new Student(name: name, grade: grade, id: id)
         }
 
         when:
@@ -235,10 +236,11 @@ class StudentControllerSpec extends Specification {
         controller.studentService = Stub(StudentService) {
             delete(_) >> true
         }
+
         when: 'A domain instance is created'
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'DELETE'
-        params.id = 1l
+        params.id = 1L
         controller.delete()
 
         then: "user gets redirected to the students' listing"
@@ -258,7 +260,7 @@ class StudentControllerSpec extends Specification {
         controller.calculateAvgGrade()
 
         then: 'verify the service was called and response received'
-        response.text == "Avg Grade is 100"
+        response.text == 'Avg Grade is 100'
         1 * controller.studentService.calculateAvgGrade() >> 100
     }
     // end::testCalculateAvgGrade[]
