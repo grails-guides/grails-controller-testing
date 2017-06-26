@@ -4,14 +4,13 @@ package demo
 // end::unitTestPackageImport[]
 
 // tag::unitTestImports[]
-import grails.test.mixin.TestFor
+import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
 // end::unitTestImports[]
 
 // tag::unitTestClassDeclaration[]
-@TestFor(StudentController)
-class StudentControllerSpec extends Specification {
+class StudentControllerSpec extends Specification implements ControllerUnitTest<StudentController> {
 // end::unitTestClassDeclaration[]
 
     // tag::testIndex[]
