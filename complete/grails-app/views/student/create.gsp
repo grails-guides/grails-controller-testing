@@ -27,7 +27,9 @@
             </g:hasErrors>
             <g:form resource="${this.student}" method="POST">
                 <fieldset class="form">
-                    <f:all bean="student"/>
+                    %{--<f:all bean="student"/>--}%
+                    <f:field bean="student" property="grade" type="number"/>
+                    <f:field bean="student" property="name" type="text"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

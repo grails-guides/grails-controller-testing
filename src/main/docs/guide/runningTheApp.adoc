@@ -1,1 +1,8 @@
 include::{commondir}/common-testApp.adoc[]
+
+or
+
+[source, bash]
+----
+./gradlew test
+----
