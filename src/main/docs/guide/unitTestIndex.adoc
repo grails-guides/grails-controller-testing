@@ -22,9 +22,9 @@ include::{sourceDir}/grails-app/controllers/demo/StudentController.groovy[tag=cl
 
 The previous action uses a service (the collaborator) to get some objects. Then, it returns
 those objects as the model. We are going verify that the objects returned by the service are
-indeed used as the model. We are going to use a Stub to help us.
+indeed used as the model. To see this we will use a Stub to help us.
 
-**When you should I use a Mock and when should I use a Stub?**
+**When should I use a Mock, and when should I use a Stub?**
 
 From the book http://shop.oreilly.com/product/0636920038597.do[Spock Up & Running]
 ____
@@ -44,3 +44,4 @@ include::{sourceDir}/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specE
 ----
 
 <1> We can verify the model contains the information we expect
+
