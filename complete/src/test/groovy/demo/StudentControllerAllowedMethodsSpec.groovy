@@ -1,9 +1,8 @@
 package demo
 
-import grails.testing.web.controllers.ControllerUnitTest
-
 import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
 import static javax.servlet.http.HttpServletResponse.SC_OK
+import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 import spock.lang.Unroll
 
