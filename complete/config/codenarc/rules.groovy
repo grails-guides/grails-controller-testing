@@ -130,9 +130,9 @@ ruleset {
     //DuplicateStringLiteral
     
     // rulesets/enhanced.xml
-    CloneWithoutCloneable 
-    JUnitAssertEqualsConstantActualValue 
-    UnsafeImplementationAsMap 
+    //CloneWithoutCloneable 
+    //JUnitAssertEqualsConstantActualValue 
+    //UnsafeImplementationAsMap 
     
     // rulesets/exceptions.xml
     CatchArrayIndexOutOfBoundsException 
@@ -200,11 +200,11 @@ ruleset {
     // rulesets/grails.xml
     //GrailsDomainHasEquals
     //GrailsDomainHasToString
-    //GrailsDomainReservedSqlKeywordName
+    GrailsDomainReservedSqlKeywordName 
     GrailsDomainWithServiceReference 
     GrailsDuplicateConstraint 
     GrailsDuplicateMapping 
-    //GrailsMassAssignment
+    GrailsMassAssignment 
     GrailsPublicControllerMethod 
     GrailsServletContextReference 
     GrailsSessionReference   // DEPRECATED
@@ -301,7 +301,7 @@ ruleset {
     ClassNameSameAsFilename 
     ClassNameSameAsSuperclass 
     ConfusingMethodName 
-    //FactoryMethodName
+    FactoryMethodName 
     FieldName 
     InterfaceName 
     InterfaceNameSameAsSuperInterface 
@@ -334,7 +334,7 @@ ruleset {
     AbcComplexity   // DEPRECATED: Use the AbcMetric rule instead. Requires the GMetrics jar
     AbcMetric   // Requires the GMetrics jar
     ClassSize 
-    CrapMetric   // Requires the GMetrics jar and a Cobertura coverage file
+    //CrapMetric   // Requires the GMetrics jar and a Cobertura coverage file
     CyclomaticComplexity   // Requires the GMetrics jar
     MethodCount 
     MethodSize 
