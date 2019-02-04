@@ -1,6 +1,6 @@
 package demo
 
-import grails.gorm.transactions.Transactional
+import grails.transaction.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
