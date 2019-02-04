@@ -3,6 +3,7 @@ package demo
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -32,13 +33,14 @@ class StudentControllerIntSpec extends Specification {
 
     def 'test json in URI to return students'() {
         when:
-        HttpResponse<Map> resp = client.toBlocking().exchange(HttpRequest.GET("/student.json"), Map) // <1> <2>
+        HttpResponse<List<Map>> resp = client.toBlocking().exchange(HttpRequest.GET("/student.json"), Argument.of(List, Map)) // <1> <2>
 
         then:
         resp.status == HttpStatus.OK // <3>
-        resp.json.size() == 3
-        resp.json.find { it.grade == 100 && it.name == 'Nirav' }
-        resp.json.find { it.grade == 95 &&  it.name == 'Jeff' }
-        resp.json.find { it.grade == 90 &&  it.name == 'Sergio' }
+        resp.body()
+        resp.body().size() == 3
+        resp.body().find { it.grade == 100 && it.name == 'Nirav' }
+        resp.body().find { it.grade == 95 &&  it.name == 'Jeff' }
+        resp.body().find { it.grade == 90 &&  it.name == 'Sergio' }
     }
 }
