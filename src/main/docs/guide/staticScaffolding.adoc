@@ -24,7 +24,7 @@ for the generated controller.
 Those artifacts provide CRUD functionality for the `Student` domain class.
 
 We have edited the generated controller and moved the code dealing with Transactional behavior into a service.
-You can checked the complete solution in the `complete` folder.
+You can check the complete solution in the `complete` folder.
 
 **The Grails team discourages the embedding of core application logic inside controllers, as
 it does not promote reuse and a clean separation of concerns. A controller's responsibility should be to handle a request and create or prepare a response.
