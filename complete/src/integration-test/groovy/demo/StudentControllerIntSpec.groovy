@@ -1,18 +1,26 @@
 package demo
 
-import grails.plugins.rest.client.RestBuilder
-import grails.plugins.rest.client.RestResponse
+import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
+import grails.testing.spock.OnceBefore
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.client.HttpClient
 import spock.lang.Shared
 import spock.lang.Specification
-
-import grails.transaction.Rollback
 
 @Integration
 @Rollback
 class StudentControllerIntSpec extends Specification {
 
-    @Shared RestBuilder rest = new RestBuilder()
+    @Shared HttpClient client
+
+    @OnceBefore
+    void init() {
+        String baseUrl = "http://localhost:$serverPort"
+        this.client  = HttpClient.create(baseUrl.toURL())
+    }
 
     def setup() {
         Student.saveAll(
@@ -24,10 +32,10 @@ class StudentControllerIntSpec extends Specification {
 
     def 'test json in URI to return students'() {
         when:
-        RestResponse resp = rest.get("http://localhost:${serverPort}/student.json") // <1> <2>
+        HttpResponse<Map> resp = client.toBlocking().exchange(HttpRequest.GET("/student.json"), Map) // <1> <2>
 
         then:
-        resp.status == 200 // <3>
+        resp.status == HttpStatus.OK // <3>
         resp.json.size() == 3
         resp.json.find { it.grade == 100 && it.name == 'Nirav' }
         resp.json.find { it.grade == 95 &&  it.name == 'Jeff' }
