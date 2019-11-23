@@ -65,6 +65,10 @@ dependencies {
     testCompile "org.grails:grails-web-testing-support"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.35.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.35.0"
+
+    //tag::micronaut-http-client[]
+    testCompile "io.micronaut:micronaut-http-client"
+    //end::micronaut-http-client[]
 }
 
 bootRun {

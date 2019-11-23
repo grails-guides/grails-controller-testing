@@ -1,6 +1,7 @@
 package demo
 
 import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
@@ -9,7 +10,6 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import spock.lang.Shared
 import spock.lang.Specification
-import java.util.Map
 
 @Integration
 @Rollback
@@ -33,8 +33,8 @@ class StudentControllerIntSpec extends Specification {
 
     def 'test json in URI to return students'() {
         when:
-        HttpRequest request = HttpRequest.GET("/student.json"), Argument.of(List, Map)
-        HttpResponse<List<Map>> resp = client.toBlocking().exchange(request) // <1> <2>
+        HttpRequest request = HttpRequest.GET("/student.json")
+        HttpResponse<List<Map>> resp = client.toBlocking().exchange(request, Argument.of(List, Map)) // <1> <2>
 
         then:
         resp.status == HttpStatus.OK // <3>
