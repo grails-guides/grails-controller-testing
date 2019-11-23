@@ -74,7 +74,7 @@ class StudentController {
             return
         }
 
-        Student student = studentService.save(cmd, true) // <2>
+        Student student = studentService.save(cmd) // <2>
         if (student.hasErrors()) { // <3>
             respond student.errors, view:'create'
             return
@@ -104,7 +104,7 @@ class StudentController {
             return
         }
 
-        Student student = studentService.update(cmd, true)
+        Student student = studentService.update(cmd)
         if ( student == null ) {
             notFound()
             return
@@ -128,8 +128,8 @@ class StudentController {
             return
         }
 
-        boolean found = studentService.delete(id, true)
-        if (!found) {
+        Student student = studentService.delete(id)
+        if (!student) {
             notFound()
             return
         }

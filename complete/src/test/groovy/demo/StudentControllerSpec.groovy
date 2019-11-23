@@ -234,7 +234,7 @@ class StudentControllerSpec extends Specification implements ControllerUnitTest<
     void 'Test that the delete action deletes an instance if it exists'() {
         given:
         controller.studentService = Stub(StudentService) {
-            delete(_) >> true
+            delete(_) >> new Student()
         }
 
         when: 'A domain instance is created'

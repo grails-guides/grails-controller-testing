@@ -1,14 +1,24 @@
 package demo
 
+import grails.gorm.services.Service
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
-import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 
+interface IStudentService {
+    Student save(String name, BigDecimal grade)
+
+    Student update(Serializable id, String name, BigDecimal grade)
+
+    Student delete(Serializable id)
+
+    int count()
+}
+
+@SuppressWarnings('AbstractClassWithoutAbstractMethod')
 @Slf4j
-@CompileStatic
-@Transactional
-class StudentService {
+@Service(Student)
+abstract class StudentService implements IStudentService {
 
     @Transactional(readOnly = true)
     BigDecimal calculateAvgGrade() {
@@ -32,42 +42,14 @@ class StudentService {
         Student.read(id)
     }
 
-    int count() {
-        Student.count() as int
+    @Transactional
+    Student save(StudentSaveCommand cmd) {
+        save(cmd.name, cmd.grade)
     }
 
-    Student save(StudentSaveCommand cmd, boolean flush = false) {
-        def student = new Student(name: cmd.name, grade: cmd.grade)
-        if ( !student.save(flush: flush) ) {
-            log.error("could not save student: ${student.errors.toString()}")
-        }
-        student
+    @Transactional
+    Student update(StudentUpdateCommand cmd) {
+        update(cmd.id, cmd.name, cmd.grade)
     }
 
-    Student update(StudentUpdateCommand cmd, boolean flush = false) {
-        def student = Student.get(cmd.id)
-        if ( !student ) {
-            return student
-        }
-        student.with {
-            name = cmd.name
-            grade = cmd.grade
-        }
-        if ( !student.save(flush: flush) ) {
-            log.error("could not update student: ${student.errors.toString()}")
-        }
-        student
-    }
-
-    /**
-     * @return false if the user was not found
-     */
-    boolean delete(Long id, boolean flush = false) {
-        Student student = Student.get(id)
-        if ( !student ) {
-            return false
-        }
-        student.delete(flush: flush)
-        true
-    }
 }

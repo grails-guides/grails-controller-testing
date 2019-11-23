@@ -1,6 +1,5 @@
 package demo
 
-import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import io.micronaut.core.type.Argument
@@ -13,10 +12,11 @@ import spock.lang.Specification
 
 @SuppressWarnings(['JUnitPublicNonTestMethod', 'JUnitPublicProperty'])
 @Integration
-@Rollback
 class StudentControllerIntSpec extends Specification {
 
     @Shared HttpClient client
+
+    StudentService studentService
 
     @OnceBefore
     void init() {
@@ -24,17 +24,20 @@ class StudentControllerIntSpec extends Specification {
         this.client  = HttpClient.create(baseUrl.toURL())
     }
 
-    def setup() {
-        Student.saveAll(
-                new Student(name: 'Nirav', grade: 100),
-                new Student(name: 'Jeff', grade: 95),
-                new Student(name: 'Sergio', grade: 90),
-        )
-    }
-
     def 'test json in URI to return students'() {
+        given:
+        List<Serializable> ids = []
+        Student.withNewTransaction {
+            ids << studentService.save('Nirav', 100 as BigDecimal).id
+            ids << studentService.save('Jeff', 95 as BigDecimal).id
+            ids << studentService.save('Sergio', 90 as BigDecimal).id
+        }
+
+        expect:
+        studentService.count() == 3
+
         when:
-        HttpRequest request = HttpRequest.GET("/student.json")
+        HttpRequest request = HttpRequest.GET('/student.json')
         HttpResponse<List<Map>> resp = client.toBlocking().exchange(request, Argument.of(List, Map)) // <1> <2>
 
         then:
@@ -44,5 +47,12 @@ class StudentControllerIntSpec extends Specification {
         resp.body().find { it.grade == 100 && it.name == 'Nirav' }
         resp.body().find { it.grade == 95 &&  it.name == 'Jeff' }
         resp.body().find { it.grade == 90 &&  it.name == 'Sergio' }
+
+        cleanup:
+        Student.withNewTransaction {
+            ids.each { id ->
+                studentService.delete(id)
+            }
+        }
     }
 }
