@@ -6,6 +6,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 import spock.lang.Unroll
 
+@SuppressWarnings(['JUnitPublicNonTestMethod', 'JUnitPublicProperty'])
 class StudentControllerAllowedMethodsSpec extends Specification implements ControllerUnitTest<StudentController> {
 
     @Unroll

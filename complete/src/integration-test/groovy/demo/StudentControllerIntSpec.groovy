@@ -11,6 +11,7 @@ import io.micronaut.http.client.HttpClient
 import spock.lang.Shared
 import spock.lang.Specification
 
+@SuppressWarnings(['JUnitPublicNonTestMethod', 'JUnitPublicProperty'])
 @Integration
 @Rollback
 class StudentControllerIntSpec extends Specification {

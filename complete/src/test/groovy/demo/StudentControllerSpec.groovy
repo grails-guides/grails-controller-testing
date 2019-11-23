@@ -9,6 +9,7 @@ import spock.lang.Specification
 
 // end::unitTestImports[]
 
+@SuppressWarnings(['JUnitPublicNonTestMethod', 'JUnitPublicProperty'])
 // tag::unitTestClassDeclaration[]
 class StudentControllerSpec extends Specification implements ControllerUnitTest<StudentController> {
 // end::unitTestClassDeclaration[]
