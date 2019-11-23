@@ -30,11 +30,11 @@ class StudentControllerSpec extends Specification implements ControllerUnitTest<
 
         then: 'The model is correct'
         model.studentList // <1>
-        model.studentList.size() == 3
+        model.studentList.size() == sampleStudents.size()
         model.studentList.find { it.name == 'Nirav' && it.grade == 100 }
         model.studentList.find { it.name == 'Jeff' && it.grade == 95 }
         model.studentList.find { it.name == 'Sergio' && it.grade == 90 }
-        model.studentCount == 3
+        model.studentCount == sampleStudents.size()
     }
     // end::testIndex[]
 
