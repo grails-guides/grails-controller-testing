@@ -1,7 +1,7 @@
 We are going to use a functional test to verify the index method
 returns a JSON payload with a list of Students.
 
-We can use `HttpClient` from the Micronaught HTTP library. Import the
+We can use `HttpClient` from the Micronaut HTTP library. Import the
 dependency into the `build.gradle`.
 
 [source, groovy]
