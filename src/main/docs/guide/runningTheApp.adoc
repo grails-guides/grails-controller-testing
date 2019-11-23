@@ -1,4 +1,4 @@
-To run the tests:
+To run the unit tests:
 
 [source, bash]
 ----
@@ -12,4 +12,11 @@ or
 [source, bash]
 ----
 ./gradlew test
+----
+
+Run the integration tests
+
+[source, bash]
+----
+./gradlew integrationTest
 ----

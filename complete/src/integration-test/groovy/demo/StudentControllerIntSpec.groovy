@@ -37,8 +37,8 @@ class StudentControllerIntSpec extends Specification {
         studentService.count() == 3
 
         when:
-        HttpRequest request = HttpRequest.GET('/student.json')
-        HttpResponse<List<Map>> resp = client.toBlocking().exchange(request, Argument.of(List, Map)) // <1> <2>
+        HttpRequest request = HttpRequest.GET('/student.json') // <1>
+        HttpResponse<List<Map>> resp = client.toBlocking().exchange(request, Argument.of(List, Map)) // <2>
 
         then:
         resp.status == HttpStatus.OK // <3>

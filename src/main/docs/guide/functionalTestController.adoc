@@ -8,7 +8,8 @@ dependency into the `build.gradle`.
 .build.gradle
 ----
 dependencies {
-    testCompile "io.micronaut:micronaut-http-client:1.0.2"
+...
+include::{sourceDir}/build.gradle[tag=micronaut-http-client]
 }
 ----
 
