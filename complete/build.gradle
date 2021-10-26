@@ -5,8 +5,8 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.0.11"
-        classpath "org.grails.plugins:hibernate5:7.0.0"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.3.4"
+        classpath "org.grails.plugins:hibernate5:7.1.0"
     }
 }
 
@@ -19,7 +19,6 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"com.bertramlabs.asset-pipeline"
-apply from: "${project.projectDir}/gradle/codenarc.gradle"
 
 repositories {
     mavenLocal()
